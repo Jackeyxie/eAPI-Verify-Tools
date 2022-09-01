@@ -2,30 +2,37 @@
 Verify Tools use eAPI
 ## 安装说明
 ## 安装需求
-Python 3. 版本大于3.3
-`python -V 
-python3 -v `
+```bash
+ python -V
+ 
+ python3 -v
+```
 
 使用PIP安装 python packegs
-`pip3 install -r requirements.txt
+使用PIP安装 python packegs
+```pip3 install -r requirements.txt
 Verify pip 
 pip3 list
 Package          Version
 ---------------- -------
 jsonrpclib-pelix 0.4.3.2
-PyYAML           6.0`
+PyYAML           6.0
+```
 
 ##使用说明
 ###确认EOS 设备则已经打开eAPI
-`configure
+```
+configure
 management api http-commands
    protocol https port 443
    no shutdown
    vrf MGMT
       no shutdown
-end`
+end
+```
 
-`DC1_SPINE1#show management api http-commands 
+```
+DC1_SPINE1#show management api http-commands 
 Enabled:            Yes
 HTTPS server:       running, set to use port 443
 HTTP server:        shutdown, set to use port 80
@@ -52,19 +59,23 @@ TLS Protocols:      1.0 1.1 1.2
 URLs                                           
 -----------------------------------------------
 Management0 : https://172.100.100.2:443        
-Management0 : https://[2001:172:100:100::a]:443`
+Management0 : https://[2001:172:100:100::a]:443
+```
 
 ###定义检查的交换机 在devices.txt 中（可定义多台设备或者单个设备)
-`% cat device.txt
+```
+% cat device.txt
 172.100.100.2
 172.100.100.3
-172.100.100.4`
+172.100.100.4
+```
 
 ###自定义检查的CLI命令，分为summary 和detail  命令办理出 
     -- summary 所有命令输在单个文本文件中，便于前后对比
     -- detail    所有命令出为每个命令一个单独文件。便于详细核对
 如示例 ：
-`---
+```
+---
 # list of EOS commands to collect in summary format - qucik Diff 
 cli_summary:
   - show version | grep Software
@@ -123,11 +134,12 @@ cli_detail:
   - show lldp neighbors
   - show interfaces counters rates | nz
   - show platform sand l3 summary
-  - show platform sand health `
+  - show platform sand health
+ ```
  
 
 ## 检查设备
-`
+```
 $ python3 ./collect-eos-commands.py --help
 usage: collect-eos-commands.py [-h] -i FILE -u USERNAME -c EOS_COMMANDS -o OUTPUT_DIRECTORY
 
@@ -139,10 +151,11 @@ optional arguments:
   -u USERNAME          Devices username
   -c EOS_COMMANDS      YAML file containing the list of EOS commands to collect
   -o OUTPUT_DIRECTORY  Output directory
-`
+```
 
 ###   调用命令检查，并记录到本地
-`[jackey@avd-ceos-lab]$ python3 ./collect-eos-commands.py -i device.txt -c eos_command.ymal -u admin -o test
+```
+[jackey@avd-ceos-lab]$ python3 ./collect-eos-commands.py -i device.txt -c eos_command.ymal -u admin -o test
 Device password: 
 ['172.100.100.2']
 Connecting to devices .... please be patient ... 
@@ -159,11 +172,11 @@ Unable to collect and save the text command show hardware tcam profile
 Unable to collect and save the text command show hardware counter drop
 Unable to collect and save the text command show platform sand l3 summary
 Unable to collect and save the text command show platform sand health
-`
-如平台差异，无法得到输出会有相应提示。如以上提示
+```
+### 如平台差异，无法得到输出会有相应提示。如以上提示
 执行命令后，会产生如下文件 （ 每次执行会自动以当时执行时间为目录名，便于前后对比）
 
-`
+```
 jackey@avd-ceos-lab test]$ tree -l
 .
 └── 172.100.100.2-2022-08-30-160819
@@ -204,9 +217,9 @@ jackey@avd-ceos-lab test]$ tree -l
     │   └── show\ version
     └── cli_summary
         └── cli_summary.txt
-`
-##Cli_summary 示例：
-`
+```
+### Cli_summary 示例：
+```
 ------show version | grep Software-----------------------------------------------------------------
 Software image version: 4.28.0F-26924507.4280F (engineering build)
 
@@ -239,17 +252,18 @@ VRF: MGMT
 The extensions are stored on internal flash (flash:)
 
 ------show boot-extensions-----------------------------------------------------------------
-`
+```
 
 ### 使用Diff 对比前后执行，cli_summary 便于统计对比，如有异常再对比cli_detail输出
 
 cli_summary 对比无异常
-`
+```
  diff -Naar ./test/172.100.100.2-2022-08-30-160819/cli_summary ./test/172.100.100.2-2022-08-30-161108/cli_summary/
-`
+```
 如以下CLI_detail对比 （注意如是时间和Counter差异可忽悠）
 
-`[jackey@avd-ceos-lab ANTA]$ diff -Naar ./test/172.100.100.2-2022-08-30-160819/cli_detail/ ./test/172.100.100.2-2022-08-30-161108/cli_detail/
+```
+[jackey@avd-ceos-lab ANTA]$ diff -Naar ./test/172.100.100.2-2022-08-30-160819/cli_detail/ ./test/172.100.100.2-2022-08-30-161108/cli_detail/
 diff -Naar "./test/172.100.100.2-2022-08-30-160819/cli_detail/show bgp evpn summary" "./test/172.100.100.2-2022-08-30-161108/cli_detail/show bgp evpn summary"
 5,8c5,8
 <   DC1_LEAF1A               192.168.255.3 4 65101           2034      2040    0    0    1d04h Estab   7      7
@@ -460,7 +474,8 @@ diff -Naar "./test/172.100.100.2-2022-08-30-160819/cli_detail/show version" "./t
 < Free memory: 52630636 kB
 ---
 > Free memory: 52563264 kB
-`
-### eAPI  Unsupported commands
+```
+###  eAPI  Unsupported commands
+
 Certain commands are not permitted and will always return an error. The largest class of such commands are interactive commands; “top” and “bash” are prime examples. 
 In addition, no abbreviations are allowed in commands. This is necessary because future versions of EOS may add more commands, rendering previous abbreviations ambiguous.
