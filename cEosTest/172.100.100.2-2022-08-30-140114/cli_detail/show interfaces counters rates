@@ -1,0 +1,6 @@
+Port      Name        Intvl   In Mbps      %  In Kpps  Out Mbps      % Out Kpps
+Et1       P2P_LINK_TO  5:00       0.0   0.0%        0       0.0   0.0%        0
+Et2       P2P_LINK_TO  5:00       0.0   0.0%        0       0.0   0.0%        0
+Et3       P2P_LINK_TO  5:00       0.0   0.0%        0       0.0   0.0%        0
+Et4       P2P_LINK_TO  5:00       0.0   0.0%        0       0.0   0.0%        0
+Ma0                    5:00       0.0   0.0%        0       0.0   0.0%        0

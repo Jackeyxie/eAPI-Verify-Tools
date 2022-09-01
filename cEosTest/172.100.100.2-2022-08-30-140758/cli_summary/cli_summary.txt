@@ -1,0 +1,33 @@
+------show version | grep Software-----------------------------------------------------------------
+Software image version: 4.28.0F-26924507.4280F (engineering build)
+
+------show interfaces status | grep connected | wc -l-----------------------------------------------------------------
+5
+
+------show ip interface brief | grep up | wc -l-----------------------------------------------------------------
+6
+
+------show ip bgp summary | grep Esta | wc -l-----------------------------------------------------------------
+4
+
+------show ipv6 bgp summary | grep Esta | wc -l-----------------------------------------------------------------
+0
+
+------show ip route vrf all summary | grep -E "VRF|Total"-----------------------------------------------------------------
+VRF: default
+   Total Routes                                              21
+VRF: MGMT
+   Total Routes                                               7
+
+------show ipv6 route vrf all summary | grep -E "VRF|Total"-----------------------------------------------------------------
+VRF: default
+   Total Routes                              3
+VRF: MGMT
+   Total Routes                              5
+
+------show extensions-----------------------------------------------------------------
+! No extensions are available
+The extensions are stored on internal flash (flash:)
+
+------show boot-extensions-----------------------------------------------------------------
+

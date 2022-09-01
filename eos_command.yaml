@@ -1,0 +1,60 @@
+---
+# list of EOS commands to collect in summary format - qucik Diff
+cli_summary:
+  - show version | grep Software
+  - show module
+  - show interfaces status | grep connected | wc -l
+  - show ip interface brief | grep up | wc -l
+  - show ip bgp summary | grep Esta | wc -l
+  - show ipv6 bgp summary | grep Esta | wc -l
+  - show ip bgp summary | grep -vE "Esta|Desc|Neigh|identifier|default" | wc -l
+  - show ipv6 bgp summary | grep -vE "Esta|Desc|Neigh|identifier|default" | wc -l
+  - show ip route vrf all summary | grep -E "VRF|Total"
+  - show ipv6 route vrf all summary | grep -E "VRF|Total"
+  - show platform fap ip route summary
+  - show extensions
+  - show boot-extensions
+
+# list of EOS commands to collect in detail output --- to check what is happend.
+cli_detail:
+  - show version
+  - show extensions
+  - show boot-extensions
+  - show inventory
+  - show running-config diffs
+  - show agent logs crash
+  - show system coredump
+  - show logging last 7 days threshold warnings
+  - show uptime
+  - show reload cause
+  - show system environment temperature
+  - show system environment temperature transceiver
+  - show system environment cooling
+  - show system environment power
+  - show processes top once
+  - show ntp status
+  #- show platform trident forwarding-table partition
+  - show hardware tcam profile
+  - show hardware counter drop
+  - show interfaces counters rates
+  - show interfaces counters errors
+  - show interfaces counters discards
+  - show interfaces status
+  - show port-channel
+  - show lacp counters all-ports
+  - show spanning-tree blockedports
+  - show ip interface brief
+  - show interfaces description
+  - show ip route summary
+  - show bfd peers
+  - show bgp ipv4 unicast summary vrf all
+  - show bgp ipv6 unicast summary vrf all
+  - show bgp evpn summary
+  - show bgp rt-membership summary
+  - show mlag
+  - show mlag config-sanity
+  - show running-config
+  - show lldp neighbors
+  - show interfaces counters rates | nz
+  - show platform sand l3 summary
+  - show platform sand health

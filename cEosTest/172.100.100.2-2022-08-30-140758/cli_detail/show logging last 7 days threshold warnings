@@ -1,0 +1,2 @@
+Aug 29 03:26:13 DC1-SPINE1 Lldp: %LLDP-4-RX_RATELIMIT: Exceeded Rx LLDPDU rate limit on Management0 (more than 32 LLDPDUs in 5 seconds)
+ 

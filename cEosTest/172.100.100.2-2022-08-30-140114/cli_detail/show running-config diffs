@@ -1,0 +1,8 @@
+--- flash:/startup-config
++++ system:/running-config
+@@ -1,4 +1,4 @@
+-! device: spine1 (cEOSLab, EOS-4.28.0F-26924507.4280F (engineering build))
++! device: DC1-SPINE1 (cEOSLab, EOS-4.28.0F-26924507.4280F (engineering build))
+ !
+ no aaa root
+ !
