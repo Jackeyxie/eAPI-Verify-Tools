@@ -21,7 +21,7 @@ jsonrpclib-pelix 0.4.3.2
 PyYAML           6.0
 ```
 
-##Usage Guide
+## Usage Guide
 ### enable eAPI on Arista Eos Device
 ```
 configure
@@ -64,7 +64,7 @@ Management0 : https://172.100.100.2:443
 Management0 : https://[2001:172:100:100::a]:443
 ```
 
-###Define the switches to check in devices.txt (multiple devices or a single device can be defined)
+### Define the switches to check in devices.txt (multiple devices or a single device can be defined)
 ```
 % cat device.txt
 172.100.100.2
