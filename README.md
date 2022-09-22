@@ -3,15 +3,17 @@ Verify Tools use eAPI
 ## Install
 ## Requerment
 ```bash
- python -V
  
  python3 -v
 ```
 
 Use PIP install python packegs
 
-```pip3 install -r requirements.txt
+```
+pip install -r requirements.txt
+```
 Verify pip 
+```
 pip3 list
 Package          Version
 ---------------- -------
