@@ -1,15 +1,15 @@
 # eAPI-Verify-Tools
 Verify Tools use eAPI
-## 安装说明
-## 安装需求
+## Install
+## Requerment
 ```bash
  python -V
  
  python3 -v
 ```
 
-使用PIP安装 python packegs
-使用PIP安装 python packegs
+Use PIP install python packegs
+
 ```pip3 install -r requirements.txt
 Verify pip 
 pip3 list
@@ -19,8 +19,8 @@ jsonrpclib-pelix 0.4.3.2
 PyYAML           6.0
 ```
 
-##使用说明
-###确认EOS 设备则已经打开eAPI
+##Usage Guide
+### enable eAPI on Arista Eos Device
 ```
 configure
 management api http-commands
@@ -62,7 +62,7 @@ Management0 : https://172.100.100.2:443
 Management0 : https://[2001:172:100:100::a]:443
 ```
 
-###定义检查的交换机 在devices.txt 中（可定义多台设备或者单个设备)
+###Define the switches to check in devices.txt (multiple devices or a single device can be defined)
 ```
 % cat device.txt
 172.100.100.2
@@ -70,10 +70,11 @@ Management0 : https://[2001:172:100:100::a]:443
 172.100.100.4
 ```
 
-###自定义检查的CLI命令，分为summary 和detail  命令办理出 
-    -- summary 所有命令输在单个文本文件中，便于前后对比
-    -- detail    所有命令出为每个命令一个单独文件。便于详细核对
-如示例 ：
+### The CLI commands for custom inspection are divided into summary and detail commands for processing. 
+    -- summary   All commands outputs in a single text file for easy comparison before and after 
+    -- detail    The commands output as a separate file for each command. Easy to check in detail
+
+#### Example ：
 ```
 ---
 # list of EOS commands to collect in summary format - qucik Diff 
@@ -138,7 +139,7 @@ cli_detail:
  ```
  
 
-## 检查设备
+## Check Device  
 ```
 $ python3 ./collect-eos-commands.py --help
 usage: collect-eos-commands.py [-h] -i FILE -u USERNAME -c EOS_COMMANDS -o OUTPUT_DIRECTORY
@@ -153,7 +154,6 @@ optional arguments:
   -o OUTPUT_DIRECTORY  Output directory
 ```
 
-###   调用命令检查，并记录到本地
 ```
 [jackey@avd-ceos-lab]$ python3 ./collect-eos-commands.py -i device.txt -c eos_command.ymal -u admin -o test
 Device password: 
@@ -173,8 +173,10 @@ Unable to collect and save the text command show hardware counter drop
 Unable to collect and save the text command show platform sand l3 summary
 Unable to collect and save the text command show platform sand health
 ```
-### 如平台差异，无法得到输出会有相应提示。如以上提示
-执行命令后，会产生如下文件 （ 每次执行会自动以当时执行时间为目录名，便于前后对比）
+####   If the platform is different（Sand & Stara）, there will be a corresponding prompt if the output cannot be obtained. As suggested above
+
+
+After executing the command, the following files are generated
 
 ```
 jackey@avd-ceos-lab test]$ tree -l
@@ -218,7 +220,7 @@ jackey@avd-ceos-lab test]$ tree -l
     └── cli_summary
         └── cli_summary.txt
 ```
-### Cli_summary 示例：
+### Cli_summary Example：
 ```
 ------show version | grep Software-----------------------------------------------------------------
 Software image version: 4.28.0F-26924507.4280F (engineering build)
@@ -254,13 +256,13 @@ The extensions are stored on internal flash (flash:)
 ------show boot-extensions-----------------------------------------------------------------
 ```
 
-### 使用Diff 对比前后执行，cli_summary 便于统计对比，如有异常再对比cli_detail输出
+### Use Diff to compare before and after any operations. cli_summary is convenient for statistical comparison. If there is an abnormality, then compare the output of cli_detail.
 
-cli_summary 对比无异常
+ No abnormality in  cli_summary  comparison
 ```
  diff -Naar ./test/172.100.100.2-2022-08-30-160819/cli_summary ./test/172.100.100.2-2022-08-30-161108/cli_summary/
 ```
-如以下CLI_detail对比 （注意如是时间和Counter差异可忽悠）
+As shown in the following CLI_detail comparison (note that the difference between time and Counter can be ignored)
 
 ```
 [jackey@avd-ceos-lab ANTA]$ diff -Naar ./test/172.100.100.2-2022-08-30-160819/cli_detail/ ./test/172.100.100.2-2022-08-30-161108/cli_detail/
